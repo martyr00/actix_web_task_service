@@ -1,14 +1,22 @@
 use actix_web::{
-    get,
-    post,
-    put,
     error::ResponderError,
-    web::Path,
-    web::Json,
+    get,
+    http::{header::ContentType, StatusCode},
+    post, put,
     web::Data,
+    web::Json,
+    web::Path,
     HttpResponde,
-    http::{header::ContentType, StatusCode}
 };
+use derive_more::Display;
+use serde::{Deserialize, Serialize};
 
-use serde::{Serialize, Deserialize};
-use derive_more::{Display};
+#[derive(Deserialize, Serialize)]
+pub struct TaskIdentifier {
+    task_global_id: String,
+}
+
+#[get("/task/{task_global_id")]
+pub async fn get_task(task_identifier: Path<TaskIdentifier>) -> Json<String> {
+    return Json(task_identifier.into_inner().task_global_id);
+}
