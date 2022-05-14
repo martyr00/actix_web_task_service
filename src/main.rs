@@ -1,5 +1,6 @@
 mod api;
 mod repository;
+mod model;
 
 use actix_web::{middleware::Logger, web::Data, App, HttpServer};
 use api::task::get_task;
